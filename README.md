@@ -2,4 +2,4 @@
 
 Source code respository for the pizza factory simulation project. 
 
-Classes should go in src/classes, anything else in src/ or in the root of the repository.
+Classes should go in src/pizzafactory/classes, anything else in src/pizzafactory or in the root of the repository.
