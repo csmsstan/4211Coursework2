@@ -35,7 +35,7 @@ public class pizzaFactorySimulationMain {
 		
 		}
 		
-	}
+	
 	
 	/** Loads all the pizzas from menu.txt into associated arrayList PizzaMenu.
 	 * 
