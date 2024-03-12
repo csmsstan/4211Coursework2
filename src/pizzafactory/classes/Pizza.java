@@ -6,7 +6,7 @@ package pizzafactory.classes;
  * The pizza class represents the main object involved in orders.
  * 
  * @author Samuel Stanton
- * @version 0.1
+ * @version 0.2
  * @since 2024-03-04
  */
 
@@ -14,7 +14,7 @@ public class Pizza {
 	
 	int pizzaId;
 	String pizzaName;
-	public int pizzaCookTimeSeconds;
+	int pizzaCookTimeSeconds;
 	
 	/** Creates a pizza with the specific ID, name and cook time.
 	 * 
@@ -28,13 +28,25 @@ public class Pizza {
 		this.pizzaCookTimeSeconds = pizzaCookTimeSeconds;
 		}
 	
-	/** Gets the pizza's details and prints them to console.
-	 * 
+	/** Returns the pizza's name.
+	 * @return The pizza's name as a string.
 	 */
-	public void showPizzaDetails() {
-		System.out.println("Pizza Name: " + pizzaName);
-		System.out.println("Pizza ID: " + pizzaId);
-		System.out.println("Time to cook: " + pizzaCookTimeSeconds + " seconds");
+	public String getPizzaName() {
+		return pizzaName;
+	}
+	
+	/** Returns the pizza's ID.
+	 * @return The pizza's ID as an integer.
+	 */
+	public int getPizzaId() {
+		return pizzaId;
+	}
+	
+	/** Returns the pizza's cook time.
+	 * @return The pizza's cook time in seconds as an integer.
+	 */
+	public int getPizzaCookTimeSeconds() {
+		return pizzaCookTimeSeconds;
 	}
 }
 	

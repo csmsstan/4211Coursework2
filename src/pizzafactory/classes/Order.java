@@ -7,7 +7,7 @@ package pizzafactory.classes;
  * The order class represents a customer's order, which can then be cooked and served.
  * 
  * @author Samuel Stanton
- * @version 0.1
+ * @version 0.2
  * @since 2024-03-04
  */
 
@@ -36,7 +36,7 @@ public class Order {
 		this.customerNumber = customerNumber;
 		this.orderPizza = orderPizza;
 		this.pizzaQuantity = pizzaQuantity;
-		this.orderCookTimeSeconds = orderPizza.pizzaCookTimeSeconds * pizzaQuantity;
+		this.orderCookTimeSeconds = orderPizza.getPizzaCookTimeSeconds() * pizzaQuantity;
 	}
 	
 /** Serves an order to the customer who ordered it, as long as the order has been cooked first.
@@ -46,7 +46,7 @@ public class Order {
 	
 	public boolean serveOrder() {
 		if (!isOrderCooked) {
-			System.out.println("Order " + orderNumber + " isn't cooked yet!");
+			System.out.println("Order " + orderNumber + " isn't cooked yet, cannot serve!");
 			return false;
 		}
 		else {
@@ -55,4 +55,18 @@ public class Order {
 		}
 	}	
 	
+/**	
+ * Returns the total cook time of the order.
+ * @return An integer representing the order's total cook time in seconds.
+ */
+	public int getOrderCookTime() {
+		return orderCookTimeSeconds;
+	}
+/**	
+ * Returns the number of the customer who placed the order.
+ * @return An integer representing the customer's ID number.
+ */	
+	public int getCustomerNumber() {
+		return customerNumber;
+	}
 }
