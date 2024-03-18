@@ -1,5 +1,5 @@
 package pizzafactory;
-//Javadoc here is broken, to be fixed
+
 /**
  *  <h1> Pizza Factory Simulation Main </h1>
  *  
@@ -22,7 +22,7 @@ public class pizzaFactorySimulationMain {
 	
 	private static Scanner input = new Scanner(System.in);
 	
-	private static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
+	public static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
@@ -37,9 +37,9 @@ public class pizzaFactorySimulationMain {
 		
 	
 	
-	/** Loads all the pizzas from menu.txt into associated arrayList PizzaMenu.
+	/** Loads all the pizzas from menu.csv into associated arrayList PizzaMenu.
 	 * 
-	 * 
+	 * @exception FileNotFoundException An exception will be thrown if menu.csv is not found in the root of the project.
 	 */
 	private static void loadMenu() {
 		
@@ -48,7 +48,7 @@ public class pizzaFactorySimulationMain {
 		boolean fileSetup = true;
 		do {
 			try {
-				fileRead = new Scanner(new FileReader("menu.txt"));
+				fileRead = new Scanner(new FileReader("menu.csv"));
 				fileRead.useDelimiter(",");
 				if (fileRead.hasNext()) {
 					fileSetup = false;
