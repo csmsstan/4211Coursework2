@@ -78,6 +78,18 @@ public class Order implements Comparable<Order> {
 	}
 	
 /**
+ * Collects all information about the order and outputs it in a human-readable format.
+ * @return A string representing all variables of the order.	
+ */
+	public String toString() {
+		return "Order ID: " + orderId + "\n" 
+	+ "Customer Number: " + customerNumber + "\n" 
+	+ "Pizza: " + orderPizza.getPizzaName() + "\n" 
+	+ "Pizza Quantity: " + pizzaQuantity + "\n" 
+	+ "Total Cook Time: " + orderCookTimeSeconds + " Seconds"; 
+	}
+	
+/**
  * Compares two orders (order1, order2) based on their order IDs.
  * @param order2 The order to compare this order to.
  * @return An integer based on which order is higher. If order1 is higher, a value greater than zero will be returned. If order2 is higher, a value less than zero will be returned.	
