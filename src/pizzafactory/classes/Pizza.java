@@ -48,6 +48,14 @@ public class Pizza {
 	public int getPizzaCookTimeSeconds() {
 		return pizzaCookTimeSeconds;
 	}
+	/** Returns the details of the pizza in a human-readable format.
+	 * @return All variables of the pizza in a formatted string.
+	 */
+	public String toString() {
+		return "Pizza ID: " + pizzaId + "\n" 
+	+ "Pizza: " + pizzaName + "\n" 
+	+ "Pizza Cook Time: " + pizzaCookTimeSeconds + " Seconds"; 
+	}
 }
 	
 
