@@ -40,7 +40,7 @@ public class Order implements Comparable<Order> {
 	}
 	
 /** Serves an order to the customer who ordered it, as long as the order has been cooked first.
- * 
+ * (needs to be reimplemented to support new customer object)
  * @return A boolean representing if the order has been successfully served or not.
  */
 	
