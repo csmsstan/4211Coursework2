@@ -6,7 +6,7 @@ package pizzafactory;
  *  This class acts as the main method for the simulation.
  *  
  *  @author Samuel Stanton
- *  @version 0.1
+ *  @version 0.2
  *  @since 2024-03-11
  */
 
