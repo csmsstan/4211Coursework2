@@ -13,9 +13,10 @@ package pizzafactory;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.PriorityBlockingQueue;
 
+import pizzafactory.classes.Order;
 import pizzafactory.classes.Pizza;
 
 public class pizzaFactorySimulationMain {
@@ -23,6 +24,8 @@ public class pizzaFactorySimulationMain {
 	private static Scanner input = new Scanner(System.in);
 	
 	public static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
+	
+	public static PriorityBlockingQueue<Order> OrderBlockingQueue = new PriorityBlockingQueue<>();
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
@@ -32,6 +35,16 @@ public class pizzaFactorySimulationMain {
 		
 		// Console menu code + GUI code to go here
 		
+		//Test code. Use OrderBlockingQueue.add() to add new orders to the queue, either created in the parameters or passed in from elsewhere.
+		OrderBlockingQueue.add(	new Order(1, 1, pizzaMenu.get(0), 3));
+		OrderBlockingQueue.add( new Order(2, 2, pizzaMenu.get(1), 2));
+		OrderBlockingQueue.add( new Order(3, 3, pizzaMenu.get(3), 1));
+		
+		while(true) {
+			//Use OrderBlockingQueue.poll() to pull the next order out of the queue:
+			Order o = OrderBlockingQueue.poll();
+			System.out.println(o.toString());
+		}
 		
 		}
 		
