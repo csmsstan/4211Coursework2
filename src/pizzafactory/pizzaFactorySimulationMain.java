@@ -43,17 +43,6 @@ public class pizzaFactorySimulationMain {
 		
 		// Console menu code + GUI code to go here
 		
-		//Test code. Use OrderBlockingQueue.add() to add new orders to the queue, either created in the parameters or passed in from elsewhere.
-		/*OrderBlockingQueue.add(	new Order(1, 1, pizzaMenu.get(0), 3));
-		OrderBlockingQueue.add( new Order(2, 2, pizzaMenu.get(1), 2));
-		OrderBlockingQueue.add( new Order(3, 3, pizzaMenu.get(3), 1));
-		
-		while(true) {
-			//Use OrderBlockingQueue.poll() to pull the next order out of the queue:
-			Order o = OrderBlockingQueue.poll();
-			System.out.println(o.toString());
-		}
-		*/
 		int nextOrderId = 0;
 		
 		while (true) {
@@ -67,9 +56,9 @@ public class pizzaFactorySimulationMain {
 			
 			int userPizzaId = input.nextInt();
 			
-			ArrayList<Pizza> pizzaSelectedArray = getUserPizzaArrayByPizzaId(userPizzaId);
+			Pizza pizzaSelected = getUserPizzaByPizzaId(userPizzaId);
 			
-			if (pizzaSelectedArray.size() == 0) {
+			if (pizzaSelected == null) {
 				System.out.println("Pizza Selected with Id" + userPizzaId + " Does Not Exist, Please Try Again");
 				continue;
 			}
@@ -77,21 +66,23 @@ public class pizzaFactorySimulationMain {
 			System.out.println("Please Select Quantity");
 			
 			int userPizzaQuantity = input.nextInt();
+			
 			int pizzaDone = 0;
 			int toDoPizza = userPizzaQuantity;
 			
-			
-			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelectedArray.get(0).getPizzaCookTimeSeconds();
+			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelected.getPizzaCookTimeSeconds();
 			
 			System.out.println("Your Wait Time: " + customerPizzaWaitTime);
 			
 			//System.out.println(Your Wait Time is :" +);
+			//Customer customer = new Customer(0, pizzaMenu);
+			//new Order(nextOrderId,customer.); 
 			
 			OvenThread[] oven = new OvenThread[runningOvens];
 			while(userPizzaQuantity != pizzaDone) {
 				for(int i = 0; i < runningOvens; i++) {
 					if (oven[i] == null && toDoPizza > 0) {// Runs if statement  if there are no ovens existing and if there if pizza left to do
-						oven[i]  = new OvenThread("Oven "+i, pizzaSelectedArray.get(0)); // Create oven
+						oven[i]  = new OvenThread("Oven "+i, pizzaSelected); // Create oven
 						oven[i].start(); // Starts oven
 						toDoPizza--;
 					} 
@@ -135,18 +126,15 @@ public class pizzaFactorySimulationMain {
 		return menu;
 	}
 	
-	public static ArrayList<Pizza> getUserPizzaArrayByPizzaId(int pizzaId) {
+	public static Pizza getUserPizzaByPizzaId(int pizzaId) {
 		// Checks in pizzaMenu if getPizzaId() matches with user input
 		for (int i = 0; i < pizzaMenu.size(); i++) {
 			if (pizzaMenu.get(i).getPizzaId() == pizzaId) {
-				ArrayList<Pizza> correctPizza = new ArrayList<Pizza>();
-				correctPizza.add(pizzaMenu.get(i));
-				return correctPizza;
+				return pizzaMenu.get(i);
 			}
 		}
-		// If user input dosen't match with pizzaId, create an empty arrayList 
-		ArrayList<Pizza> correctPizza = new ArrayList<Pizza>();
-		return correctPizza;
+		// If user input dosen't match with pizzaId, return nothing
+		return null;
 	}
 	
 	/** Loads all the pizzas from menu.csv into associated arrayList PizzaMenu.

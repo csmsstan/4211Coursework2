@@ -57,7 +57,7 @@ public class Customer {
 	 * @param orderId The ID that the customer's order will have.
 	 * @return an Order object containing what the customer has chosen to order. 
 	 */
-	public Order placeOrder(int orderId, ) {
+	public Order placeOrder(int orderId) {
 		Order customerOrder = new Order(orderId, customerNumber, customerPizza, pizzaQuantity);
 		return customerOrder;
 		
