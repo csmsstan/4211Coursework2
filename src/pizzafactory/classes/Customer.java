@@ -15,13 +15,14 @@ import java.util.Random;
 public class Customer {
 	static int customerNumber;
 	Pizza customerPizza;
+	int pizzaQuantity;
 	Order customerOrder;
 	ArrayList<Pizza> pizzaMenu;
 	private Random randomGenerator;
 	static boolean isServed;
 	
 	/**
-	 * Creates a new customer.
+	 * Creates a new customer with a randomly generated order.
 	 * 
 	 * @param customerNumber the customer's ID number.
 	 * @param pizzaMenu A copy of the menu, for the customer to look at. (there is probably a better way of doing this)
@@ -33,15 +34,30 @@ public class Customer {
 		randomGenerator = new Random();
 		int menuItem = randomGenerator.nextInt(pizzaMenu.size());
 		customerPizza = pizzaMenu.get(menuItem);
+		int pizzaQuantity = randomGenerator.nextInt(5);
 	}
-	
+
+	/**
+	 * Creates a new customer with a specific order.
+	 * 
+	 * @param customerNumber the customer's ID number.
+	 * @param customerPizza the pizza that the customer wants to order.
+  	 * @param pizzaQuantity the amount of pizzas that the customer wants to order.
+	 * 
+	 */
+		public Customer(int customerNumber, Pizza customerPizza, int pizzaQuantity) {
+		Customer.customerNumber = customerNumber;
+		this.pizzaMenu = pizzaMenu;
+		isServed = false;
+		this.customerPizza = customerPizza;
+		this.pizzaQuantity = pizzaQuantity;
+	}
 	/** Prompts the customer to create a new order.
 	 * 
 	 * @param orderId The ID that the customer's order will have.
 	 * @return an Order object containing what the customer has chosen to order. 
 	 */
-	public Order placeOrder(int orderId) {
-		int pizzaQuantity = randomGenerator.nextInt(5);
+	public Order placeOrder(int orderId, ) {
 		Order customerOrder = new Order(orderId, customerNumber, customerPizza, pizzaQuantity);
 		return customerOrder;
 		
