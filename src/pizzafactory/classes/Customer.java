@@ -2,8 +2,11 @@ package pizzafactory.classes;
 import java.util.ArrayList;
 import java.util.Random;
 
-/** Customer
+/** 
+ * <h1> Customer </h1>
+ * 
  * A customer who may place an order for a pizza.
+ * 
  * @author Samuel Stanton
  * @version 0.1
  * @since 19/03/2024

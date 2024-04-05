@@ -1,29 +1,37 @@
 package pizzafactory;
 
-/**
- *  <h1> Pizza Factory Simulation Main </h1>
- *  
- *  This class acts as the main method for the simulation.
- *  
- *  @author Samuel Stanton
- *  @version 0.2
- *  @since 2024-03-11
- */
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import pizzafactory.classes.Customer;
 import pizzafactory.classes.Order;
+import pizzafactory.classes.OvenThread;
 import pizzafactory.classes.Pizza;
+
+/**
+ *  <h1> Pizza Factory Simulation Main </h1>
+ *  
+ *  This class acts as the main method for the simulation.
+ *  
+ *  @author Samuel Stanton
+ *  @author Ewa Wagner
+ *  @version 0.2
+ *  @since 2024-03-11
+ *  
+ */
 
 public class pizzaFactorySimulationMain {
 	
 	private static Scanner input = new Scanner(System.in);
 	
+	private static int runningOvens = 5;
+	
 	public static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
+	
+	public static ArrayList<Order> customerOrders = new ArrayList<Order>(); 
 	
 	public static PriorityBlockingQueue<Order> OrderBlockingQueue = new PriorityBlockingQueue<>();
 	
@@ -36,7 +44,7 @@ public class pizzaFactorySimulationMain {
 		// Console menu code + GUI code to go here
 		
 		//Test code. Use OrderBlockingQueue.add() to add new orders to the queue, either created in the parameters or passed in from elsewhere.
-		OrderBlockingQueue.add(	new Order(1, 1, pizzaMenu.get(0), 3));
+		/*OrderBlockingQueue.add(	new Order(1, 1, pizzaMenu.get(0), 3));
 		OrderBlockingQueue.add( new Order(2, 2, pizzaMenu.get(1), 2));
 		OrderBlockingQueue.add( new Order(3, 3, pizzaMenu.get(3), 1));
 		
@@ -45,10 +53,101 @@ public class pizzaFactorySimulationMain {
 			Order o = OrderBlockingQueue.poll();
 			System.out.println(o.toString());
 		}
+		*/
+		int nextOrderId = 0;
 		
+		while (true) {
+			System.out.print("==================\n"
+					+ "Menu Selection\n"
+					+ "==================\n"
+					+ "Options:\n"
+					+ getPizzaMenu()
+					+ "==================\n"
+					+ "Pick: ");
+			
+			int userPizzaId = input.nextInt();
+			
+			ArrayList<Pizza> pizzaSelectedArray = getUserPizzaArrayByPizzaId(userPizzaId);
+			
+			if (pizzaSelectedArray.size() == 0) {
+				System.out.println("Pizza Selected with Id" + userPizzaId + " Does Not Exist, Please Try Again");
+				continue;
+			}
+				
+			System.out.println("Please Select Quantity");
+			
+			int userPizzaQuantity = input.nextInt();
+			int pizzaDone = 0;
+			int toDoPizza = userPizzaQuantity;
+			
+			
+			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelectedArray.get(0).getPizzaCookTimeSeconds();
+			
+			System.out.println("Your Wait Time: " + customerPizzaWaitTime);
+			
+			//System.out.println(Your Wait Time is :" +);
+			
+			OvenThread[] oven = new OvenThread[runningOvens];
+			while(userPizzaQuantity != pizzaDone) {
+				for(int i = 0; i < runningOvens; i++) {
+					if (oven[i] == null && toDoPizza > 0) {// Runs if statement  if there are no ovens existing and if there if pizza left to do
+						oven[i]  = new OvenThread("Oven "+i, pizzaSelectedArray.get(0)); // Create oven
+						oven[i].start(); // Starts oven
+						toDoPizza--;
+					} 
+					else if (oven[i] != null && oven[i].getCookingStatus() == false) {// Runs if oven[i] is not null and if oven is finished with cooking
+						pizzaDone++;
+						try {
+							oven[i].join(); // Stops oven
+							oven[i] = null; // Resets oven[i] to null
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
+				//Sleep
+		        try {
+		            Thread.sleep(500);
+		        } catch (InterruptedException e) {
+		            e.printStackTrace();
+		        }
+			}
+			//Temporary print statement
+			System.out.println("Everythings done");
+			
+			nextOrderId++;
+			
 		}
+				
+	}
 		
+	//Goes through pizzaMenu and stores getPizzaId() and getPizzaName() in menu string
+	public static String getPizzaMenu() {
+		
+		String menu = "";
+		for (int i = 0; i < pizzaMenu.size(); i++) {
+			menu += (pizzaMenu.get(i).getPizzaId()
+					+". "
+					+ pizzaMenu.get(i).getPizzaName()
+					+ "\n");
+		}
+		return menu;
+	}
 	
+	public static ArrayList<Pizza> getUserPizzaArrayByPizzaId(int pizzaId) {
+		// Checks in pizzaMenu if getPizzaId() matches with user input
+		for (int i = 0; i < pizzaMenu.size(); i++) {
+			if (pizzaMenu.get(i).getPizzaId() == pizzaId) {
+				ArrayList<Pizza> correctPizza = new ArrayList<Pizza>();
+				correctPizza.add(pizzaMenu.get(i));
+				return correctPizza;
+			}
+		}
+		// If user input dosen't match with pizzaId, create an empty arrayList 
+		ArrayList<Pizza> correctPizza = new ArrayList<Pizza>();
+		return correctPizza;
+	}
 	
 	/** Loads all the pizzas from menu.csv into associated arrayList PizzaMenu.
 	 * 
