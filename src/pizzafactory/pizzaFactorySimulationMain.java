@@ -31,7 +31,9 @@ public class pizzaFactorySimulationMain {
 	
 	public static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
 	
-	public static ArrayList<Order> customerOrders = new ArrayList<Order>(); 
+	public static ArrayList<Customer> totalCustomerHistory = new ArrayList<Customer>();
+	
+	public static ArrayList<Order> totalOrderHistory = new ArrayList<Order>(); 
 	
 	public static PriorityBlockingQueue<Order> OrderBlockingQueue = new PriorityBlockingQueue<>();
 	
@@ -44,6 +46,7 @@ public class pizzaFactorySimulationMain {
 		// Console menu code + GUI code to go here
 		
 		int nextOrderId = 0;
+		int nextCustomerId = 0;
 		
 		while (true) {
 			System.out.print("==================\n"
@@ -52,18 +55,18 @@ public class pizzaFactorySimulationMain {
 					+ "Options:\n"
 					+ getPizzaMenu()
 					+ "==================\n"
-					+ "Pick: ");
+					+ "Pick: \n> ");
 			
 			int userPizzaId = input.nextInt();
 			
 			Pizza pizzaSelected = getUserPizzaByPizzaId(userPizzaId);
 			
 			if (pizzaSelected == null) {
-				System.out.println("Pizza Selected with Id" + userPizzaId + " Does Not Exist, Please Try Again");
+				System.out.println("Pizza Selected with Id" + userPizzaId + " Does Not Exist, Please Try Again.");
 				continue;
 			}
 				
-			System.out.println("Please Select Quantity");
+			System.out.print("Please Select Quantity \n> ");
 			
 			int userPizzaQuantity = input.nextInt();
 			
@@ -72,42 +75,63 @@ public class pizzaFactorySimulationMain {
 			
 			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelected.getPizzaCookTimeSeconds();
 			
-			System.out.println("Your Wait Time: " + customerPizzaWaitTime);
+			System.out.println("Your Wait Time is: " + customerPizzaWaitTime + "s");
 			
-			//System.out.println(Your Wait Time is :" +);
-			//Customer customer = new Customer(0, pizzaMenu);
-			//new Order(nextOrderId,customer.); 
+			
+			Customer customer = new Customer(nextCustomerId, pizzaSelected, userPizzaQuantity);
+			nextCustomerId++;
+			totalCustomerHistory.add(customer);
+			
+			
+			Order customerOrder = customer.placeOrder(nextOrderId);
+			nextOrderId++;
+			//Saves each customerOrder to totalOrderHistory, can be used to review total order history each customer made
+			totalOrderHistory.add(customerOrder);
+			System.out.println("Your Customer Id is: " + customerOrder.getCustomerNumber());
 			
 			OvenThread[] oven = new OvenThread[runningOvens];
 			while(userPizzaQuantity != pizzaDone) {
 				for(int i = 0; i < runningOvens; i++) {
-					if (oven[i] == null && toDoPizza > 0) {// Runs if statement  if there are no ovens existing and if there if pizza left to do
-						oven[i]  = new OvenThread("Oven "+i, pizzaSelected); // Create oven
-						oven[i].start(); // Starts oven
+					// Runs if there is no oven existing and if there is pizza left to do
+					if (oven[i] == null && toDoPizza > 0) {
+						// Create oven
+						oven[i]  = new OvenThread("Oven "+i, pizzaSelected); 
+						// Starts oven
+						oven[i].start();
 						toDoPizza--;
 					} 
-					else if (oven[i] != null && oven[i].getCookingStatus() == false) {// Runs if oven[i] is not null and if oven is finished with cooking
+					// Runs if oven[i] is not null and if oven is finished with cooking
+					else if (oven[i] != null && oven[i].getCookingStatus() == false) {
 						pizzaDone++;
 						try {
-							oven[i].join(); // Stops oven
-							oven[i] = null; // Resets oven[i] to null
+							// Stops oven
+							oven[i].join();
+							// Resets oven[i] to null
+							oven[i] = null; 
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
+						
 					}
 					
 				}
-				//Sleep
+				//Sleep 0.5s
 		        try {
 		            Thread.sleep(500);
 		        } catch (InterruptedException e) {
 		            e.printStackTrace();
 		        }
 			}
-			//Temporary print statement
-			System.out.println("Everythings done");
 			
-			nextOrderId++;
+			// Checks if pizza is served to the correct customer by checking their customerNumber
+			if (customer.serveCustomer(customerOrder)) {
+				System.out.println("Customer Id with "+ customerOrder.getCustomerNumber() + ", your pizza is finished and ready to be served.");
+			}else {
+				continue;
+			}
+
+			System.out.print("Press Enter to Order Again...");
+			input.next();
 			
 		}
 				
