@@ -66,7 +66,7 @@ public class Customer {
 	 * @return a boolean indicating whether the order has been successfully served or not.
 	 */
 	public static boolean serveCustomer(Order servedOrder) {
-		if (servedOrder.customerNumber == customerNumber) {
+		if (servedOrder.customerNumber == customerNumber && servedOrder.isOrderCooked) {
 			isServed = true;
 			return true;
 		} else {
