@@ -2,8 +2,6 @@
 package pizzafactory.classes;
 
 /**
- * <h1> Order </h1>
- * 
  * The order class represents a customer's order, which can then be cooked and served.
  * 
  * @author Samuel Stanton

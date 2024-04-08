@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /** 
- * <h1> Customer </h1>
- * 
  * A customer who may place an order for a pizza.
  * 
  * @author Samuel Stanton

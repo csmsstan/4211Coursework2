@@ -1,7 +1,6 @@
 package pizzafactory.classes;
 
 /**
- * <h1> Pizza </h1>
  * 
  * The pizza class represents the main object involved in orders.
  * 
