@@ -12,7 +12,6 @@ import pizzafactory.classes.OvenThread;
 import pizzafactory.classes.Pizza;
 
 /**
- *  <h1> Pizza Factory Simulation Main </h1>
  *  
  *  This class acts as the main method for the simulation.
  *  
@@ -43,8 +42,6 @@ public class pizzaFactorySimulationMain {
 	 * An ArrayList holding all past orders.
 	 */
 	public static ArrayList<Order> totalOrderHistory = new ArrayList<Order>(); 
-	
-	public static PriorityBlockingQueue<Order> OrderBlockingQueue = new PriorityBlockingQueue<>();
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
