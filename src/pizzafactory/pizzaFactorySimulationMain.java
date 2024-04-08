@@ -104,6 +104,8 @@ public class pizzaFactorySimulationMain {
 					else if (oven[i] != null && oven[i].getCookingStatus() == false) {
 						pizzaDone++;
 						try {
+							// Set order to cooked
+							customerOrder.cookOrder();
 							// Stops oven
 							oven[i].join();
 							// Resets oven[i] to null
