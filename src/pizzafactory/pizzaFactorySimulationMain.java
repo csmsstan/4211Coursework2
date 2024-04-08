@@ -29,10 +29,19 @@ public class pizzaFactorySimulationMain {
 	
 	private static int runningOvens = 5;
 	
+	/**
+	 * An ArrayList holding all pizza objects for reference.
+	 */
 	public static final ArrayList<Pizza> pizzaMenu = new ArrayList<Pizza>();
 	
+	/**
+	 * An ArrayList holding a list of all customer objects that have been used.
+	 */
 	public static ArrayList<Customer> totalCustomerHistory = new ArrayList<Customer>();
 	
+	/**
+	 * An ArrayList holding all past orders.
+	 */
 	public static ArrayList<Order> totalOrderHistory = new ArrayList<Order>(); 
 	
 	public static PriorityBlockingQueue<Order> OrderBlockingQueue = new PriorityBlockingQueue<>();
