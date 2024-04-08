@@ -36,22 +36,6 @@ public class Order implements Comparable<Order> {
 		this.pizzaQuantity = pizzaQuantity;
 		this.orderCookTimeSeconds = orderPizza.getPizzaCookTimeSeconds() * pizzaQuantity;
 	}
-	
-/** Serves an order to the customer who ordered it, as long as the order has been cooked first.
- * (needs to be reimplemented to support new customer object)
- * @return A boolean representing if the order has been successfully served or not.
- */
-	
-	public boolean serveOrder() {
-		if (!isOrderCooked) {
-			System.out.println("Order " + orderId + " isn't cooked yet, cannot serve!");
-			return false;
-		}
-		else {
-			System.out.println("Order served to Customer " + customerNumber);
-			return true;
-		}
-	}	
 
 /**	
  * Returns the numerical ID of the order.
@@ -74,7 +58,13 @@ public class Order implements Comparable<Order> {
 	public int getCustomerNumber() {
 		return customerNumber;
 	}
-	
+
+/** 
+ * Set the order's status to cooked.	
+ */
+	public void cookOrder() {
+		isOrderCooked = true;
+	}
 /**
  * Collects all information about the order and outputs it in a human-readable format.
  * @return A string representing all variables of the order.	
