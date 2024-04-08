@@ -43,7 +43,7 @@ public class pizzaFactorySimulationMain {
 		
 		loadMenu();
 		
-		// Console menu code + GUI code to go here
+		// Have customer choose their order and create the order in the system:
 		
 		int nextOrderId = 0;
 		int nextCustomerId = 0;
@@ -124,7 +124,7 @@ public class pizzaFactorySimulationMain {
 			}
 			
 			// Checks if pizza is served to the correct customer by checking their customerNumber
-			if (customer.serveCustomer(customerOrder)) {
+			if (Customer.serveCustomer(customerOrder)) {
 				System.out.println("Customer Id with "+ customerOrder.getCustomerNumber() + ", your pizza is finished and ready to be served.");
 			}else {
 				continue;
@@ -137,7 +137,11 @@ public class pizzaFactorySimulationMain {
 				
 	}
 		
-	//Goes through pizzaMenu and stores getPizzaId() and getPizzaName() in menu string
+	/** Goes through pizzaMenu and stores getPizzaId() and getPizzaName() in menu string
+	 * 
+	 * @author Ewa Wagner
+	 * @return The pizza ID and name as a string.
+	 */
 	public static String getPizzaMenu() {
 		
 		String menu = "";
@@ -150,6 +154,12 @@ public class pizzaFactorySimulationMain {
 		return menu;
 	}
 	
+	/** Iterates through the menu and gets the relevant pizza object using its ID.
+	 * 
+	 * @author Ewa Wagner
+	 * @param pizzaId The ID of the pizza we want to acquire.
+	 * @return The pizza that was requested.
+	 */
 	public static Pizza getUserPizzaByPizzaId(int pizzaId) {
 		// Checks in pizzaMenu if getPizzaId() matches with user input
 		for (int i = 0; i < pizzaMenu.size(); i++) {
@@ -164,6 +174,8 @@ public class pizzaFactorySimulationMain {
 	/** Loads all the pizzas from menu.csv into associated arrayList PizzaMenu.
 	 * 
 	 * @exception FileNotFoundException An exception will be thrown if menu.csv is not found in the root of the project.
+	 * @author Samuel Stanton
+	 * 
 	 */
 	private static void loadMenu() {
 		
