@@ -47,7 +47,6 @@ public class Customer {
 	 */
 		public Customer(int customerNumber, Pizza customerPizza, int pizzaQuantity) {
 		Customer.customerNumber = customerNumber;
-		this.pizzaMenu = pizzaMenu;
 		isServed = false;
 		this.customerPizza = customerPizza;
 		this.pizzaQuantity = pizzaQuantity;
