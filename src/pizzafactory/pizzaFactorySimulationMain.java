@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.PriorityBlockingQueue;
 
 import pizzafactory.classes.Customer;
 import pizzafactory.classes.Order;
