@@ -32,7 +32,7 @@ public class Customer {
 		randomGenerator = new Random();
 		int menuItem = randomGenerator.nextInt(pizzaMenu.size());
 		customerPizza = pizzaMenu.get(menuItem);
-		int pizzaQuantity = randomGenerator.nextInt(5);
+		pizzaQuantity = randomGenerator.nextInt(5);
 	}
 
 	/**
