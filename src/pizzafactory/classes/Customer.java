@@ -70,7 +70,7 @@ public class Customer {
 			isServed = true;
 			return true;
 		} else {
-			System.out.println("Order has been served to the wrong customer! (order is for customer " + servedOrder.customerNumber + ", but this is customer " + customerNumber + ").");
+			System.out.println("Order not served: There is a problem with the order!");
 			return false;
 		}
 		
