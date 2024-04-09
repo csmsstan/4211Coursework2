@@ -82,14 +82,24 @@ public class OvenThread extends Thread{
 	public String getPizzaName(){
 		return pizza.getPizzaName();
 	}
-	/**
-	 * Get the total time that the pizza will take to cook.
-	 * @return The pizza's cook time in seconds.
-	 */
+    
+    /**
+     * Get the total time that the pizza will take to cook.
+     * @return The pizza's cook time in seconds.
+     */
     public int getTotalPizzaCookTime() {
         return pizza.getPizzaCookTimeSeconds();
     }
-    
+
+    /**
+     * Get the total time that the oven has been cooking for.
+     * @return The total production time in seconds.
+     * [SS]
+     */
+    public int getTotalProductionTime() {
+        return totalProductionTime;
+    }
+
     /** 
      * Get information on whether the oven is currently cooking or not.
      * @return A boolean signifying whether the oven is currently cooking a pizza.
