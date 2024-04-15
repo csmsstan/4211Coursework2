@@ -65,6 +65,11 @@ public class pizzaFactorySimulationMain {
 			int menuOption = input.nextInt();
 			if (menuOption == 1) {
 				customerIsRandom = true; 
+			} else if (menuOption == 2) {
+				customerIsRandom = false; 	
+			} else {
+				System.out.println("\nYour input is invalid! \n");
+				continue;
 			}
 			
 			//Depending on option selected, either generate a random customer or let the user specify, then come back here
