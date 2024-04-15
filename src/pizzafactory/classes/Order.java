@@ -63,8 +63,17 @@ public class Order implements Comparable<Order> {
  * Set the order's status to cooked.	
  */
 	public void cookOrder() {
-		isOrderCooked = true;
+	isOrderCooked = true;
 	}
+
+/**	
+ * Get the pizza assigned to the order.
+ * @return The order's pizza as a pizza object.
+ */
+	public Pizza getOrderPizza() {
+		return orderPizza;
+	}
+	
 /**
  * Collects all information about the order and outputs it in a human-readable format.
  * @return A string representing all variables of the order.	

@@ -75,5 +75,12 @@ public class Customer {
 		}
 		
 	}
+	/** Gets the quantity of pizzas that the customer is ordering.
+	 * 
+	 * @return The pizza quantity as an integer.
+	 */
+	public int getPizzaQuantity () {
+		return pizzaQuantity;
+	}
 	
 }
