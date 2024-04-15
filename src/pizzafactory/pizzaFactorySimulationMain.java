@@ -48,51 +48,41 @@ public class pizzaFactorySimulationMain {
 		
 		loadMenu();
 		
-		// Have customer choose their order and create the order in the system:
+		// Have user choose how they want order to be decided:
 		
 		int nextOrderId = 0;
 		int nextCustomerId = 0;
-		
+		boolean customerIsRandom = false;
 		while (true) {
-			System.out.print("==================\n"
-					+ "Menu Selection\n"
+			System.out.print("================== \n"
+					+ "Option Select: \n"
 					+ "==================\n"
-					+ "Options:\n"
-					+ getPizzaMenu()
-					+ "==================\n"
+					+ "1. New Random Customer \n"
+					+ "2. New Customer (Custom Order) \n"
+					+ "================== \n"
 					+ "Pick: \n> ");
 			
-			int userPizzaId = input.nextInt();
-			
-			Pizza pizzaSelected = getUserPizzaByPizzaId(userPizzaId);
-			
-			if (pizzaSelected == null) {
-				System.out.println("Pizza Selected with Id" + userPizzaId + " Does Not Exist, Please Try Again.");
-				continue;
+			int menuOption = input.nextInt();
+			if (menuOption == 1) {
+				customerIsRandom = true; 
 			}
-				
-			System.out.print("Please Select Quantity \n> ");
 			
-			int userPizzaQuantity = input.nextInt();
-			
-			int pizzaDone = 0;
-			int toDoPizza = userPizzaQuantity;
-			
-			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelected.getPizzaCookTimeSeconds();
-			
-			System.out.println("Your Wait Time is: " + customerPizzaWaitTime + "s");
-			
-			
-			Customer customer = new Customer(nextCustomerId, pizzaSelected, userPizzaQuantity);
+			//Depending on option selected, either generate a random customer or let the user specify, then come back here
+			Customer customer = createCustomer(customerIsRandom, nextCustomerId);
 			nextCustomerId++;
 			totalCustomerHistory.add(customer);
 			
+			int pizzaDone = 0;
+			int userPizzaQuantity = customer.getPizzaQuantity();
+			int toDoPizza = userPizzaQuantity;
 			
+			//Set up customer order to be cooked
 			Order customerOrder = customer.placeOrder(nextOrderId);
 			nextOrderId++;
+			System.out.println("Order to be cooked: \n" + customerOrder.toString());
+			
 			//Saves each customerOrder to totalOrderHistory, can be used to review total order history each customer made
 			totalOrderHistory.add(customerOrder);
-			System.out.println("Your Customer Id is: " + customerOrder.getCustomerNumber());
 			
 			OvenThread[] oven = new OvenThread[runningOvens];
 			while(userPizzaQuantity != pizzaDone) {
@@ -100,7 +90,7 @@ public class pizzaFactorySimulationMain {
 					// Runs if there is no oven existing and if there is pizza left to do
 					if (oven[i] == null && toDoPizza > 0) {
 						// Create oven
-						oven[i]  = new OvenThread("Oven "+i, pizzaSelected); 
+						oven[i]  = new OvenThread("Oven "+i, customerOrder.getOrderPizza()); 
 						// Starts oven
 						oven[i].start();
 						toDoPizza--;
@@ -137,13 +127,69 @@ public class pizzaFactorySimulationMain {
 				continue;
 			}
 
-			System.out.print("Press Enter to Order Again...");
+			System.out.print("Type Anything and Press Enter to Order Again...");
 			input.next();
 			
 		}
 				
 	}
+	/** Creates a new customer for the factory simulation based on user requirements.	
+	 * 
+	 * @param isRandom Decides whether the customer is to be generated randomly or specified.
+	 * @param nextCustomerId The ID that the customer should have.
+	 * @return The completed, constructed customer object.
+	 */
+	
+	public static Customer createCustomer(boolean isRandom, int nextCustomerId) {
+		if (isRandom) {
+			Customer outputCustomer = new Customer (nextCustomerId, pizzaMenu);
+			return outputCustomer;
+		}
+		else {
+			boolean pizzaSelectionComplete = false;
+			int userPizzaId = 0;
+			while (!pizzaSelectionComplete) {
+				System.out.print("==================\n"
+						+ "Menu Selection\n"
+						+ "==================\n"
+						+ "Options:\n"
+						+ getPizzaMenu()
+						+ "==================\n"
+						+ "Pick: \n> ");
+
+				userPizzaId = input.nextInt();
+				boolean success;
+				try {
+					Pizza pizzaTest = pizzaMenu.get(userPizzaId);
+					success = true;
+				}
+				catch (IndexOutOfBoundsException e) {
+					System.out.println("Pizza with ID " + userPizzaId + "does not exist, please try again.");
+					success = false;
+				}
+				
+				if (success) {
+					pizzaSelectionComplete = true;
+				}
+			}
+				
+			Pizza pizzaSelected = getUserPizzaByPizzaId(userPizzaId);
+			System.out.print("Please Select Quantity \n> ");
+
+			int userPizzaQuantity = input.nextInt();
+
+			double customerPizzaWaitTime = Math.ceil((double)userPizzaQuantity/runningOvens) * pizzaSelected.getPizzaCookTimeSeconds();
+
+			System.out.println("Your Wait Time is: " + customerPizzaWaitTime + "s");
+
+
+			Customer outputCustomer = new Customer(nextCustomerId, pizzaSelected, userPizzaQuantity);
+			return outputCustomer;
+			
+		}
 		
+	}
+
 	/** Goes through pizzaMenu and stores getPizzaId() and getPizzaName() in menu string
 	 * 
 	 * @author Ewa Wagner
