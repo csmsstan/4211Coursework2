@@ -137,7 +137,7 @@ public class pizzaFactorySimulationMain {
 				continue;
 			}
 
-			System.out.print("Press Enter to Order Again...");
+			System.out.print("Type Anything and Press Enter to Order Again...");
 			input.next();
 			
 		}
