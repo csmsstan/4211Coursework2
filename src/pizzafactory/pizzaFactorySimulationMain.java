@@ -143,6 +143,7 @@ public class pizzaFactorySimulationMain {
 	 * @param isRandom Decides whether the customer is to be generated randomly or specified.
 	 * @param nextCustomerId The ID that the customer should have.
 	 * @return The completed, constructed customer object.
+  	 * [SS} 
 	 */
 	
 	public static Customer createCustomer(boolean isRandom, int nextCustomerId) {
